@@ -100,91 +100,6 @@ function! go#tool#PackageName() abort
   return split(out, '\n')[0]
 endfunction
 
-<<<<<<< HEAD
-function! go#tool#ParseErrors(lines) abort
-  let errors = []
-
-  for line in a:lines
-    let fatalerrors = matchlist(line, '^\(fatal error:.*\)$')
-    let tokens = matchlist(line, '^\s*\(.\{-}\):\(\d\+\):\s*\(.*\)')
-
-    if !empty(fatalerrors)
-      call add(errors, {"text": fatalerrors[1]})
-    elseif !empty(tokens)
-      " strip endlines of form ^M
-      let out = substitute(tokens[3], '\r$', '', '')
-
-      call add(errors, {
-            \ "filename" : fnamemodify(tokens[1], ':p'),
-            \ "lnum"     : tokens[2],
-            \ "text"     : out,
-            \ })
-    elseif !empty(errors)
-      " Preserve indented lines.
-      " This comes up especially with multi-line test output.
-      if match(line, '^\s') >= 0
-        call add(errors, {"text": substitute(line, '\r$', '', '')})
-      endif
-    endif
-  endfor
-
-  return errors
-endfunction
-
-" FilterValids filters the given items with only items that have a valid
-" filename. Any non valid filename is filtered out.
-function! go#tool#FilterValids(items) abort
-  " Remove any nonvalid filename from the location list to avoid opening an
-  " empty buffer. See https://github.com/fatih/vim-go/issues/287 for
-  " details.
-  let filtered = []
-  let is_readable = {}
-
-  for item in a:items
-    if has_key(item, 'bufnr')
-      let filename = bufname(item.bufnr)
-    elseif has_key(item, 'filename')
-      let filename = item.filename
-    else
-      " nothing to do, add item back to the list
-      call add(filtered, item)
-      continue
-    endif
-
-    if !has_key(is_readable, filename)
-      let is_readable[filename] = filereadable(filename)
-    endif
-    if is_readable[filename]
-      call add(filtered, item)
-    endif
-  endfor
-
-  for k in keys(filter(is_readable, '!v:val'))
-    echo "vim-go: " | echohl Identifier | echon "[run] Dropped " | echohl Constant | echon  '"' . k . '"'
-    echohl Identifier | echon " from location list (nonvalid filename)" | echohl None
-  endfor
-
-  return filtered
-endfunction
-
-function! go#tool#ExecuteInDir(cmd) abort
-  if !isdirectory(expand("%:p:h"))
-    return ['', 1]
-  endif
-
-  let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd ' : 'cd '
-  let dir = getcwd()
-  try
-    execute cd . fnameescape(expand("%:p:h"))
-    let [l:out, l:err] = go#util#Exec(a:cmd)
-  finally
-    execute cd . fnameescape(l:dir)
-  endtry
-  return [l:out, l:err]
-endfunction
-
-=======
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 " Exists checks whether the given importpath exists or not. It returns 0 if
 " the importpath exists under GOPATH.
 function! go#tool#Exists(importpath) abort
@@ -197,7 +112,18 @@ function! go#tool#Exists(importpath) abort
 endfunction
 
 function! go#tool#DescribeBalloon()
-  return go#guru#DescribeBalloon()
+  let l:fname = fnamemodify(bufname(v:beval_bufnr), ':p')
+  call go#lsp#Hover(l:fname, v:beval_lnum, v:beval_col, funcref('s:balloon', []))
+  return ''
+endfunction
+
+function! s:balloon(msg)
+  if has('balloon_eval')
+    call balloon_show(a:msg)
+    return
+  endif
+
+  call balloon_show(balloon_split(a:msg))
 endfunction
 
 " restore Vi compatibility settings

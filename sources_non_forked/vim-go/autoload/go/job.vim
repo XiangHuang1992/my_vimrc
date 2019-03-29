@@ -366,25 +366,11 @@ function! s:neooptions(options)
         let l:options['callback'] = a:options['callback']
 
         if !has_key(a:options, 'out_cb')
-<<<<<<< HEAD
-          function! s:callback2on_stdout(ch, data, event) dict
-            let self.stdout_buf = s:neocb(a:ch, self.stdout_buf, a:data, self.callback)
-          endfunction
-          let l:options['on_stdout'] = function('s:callback2on_stdout', [], l:options)
-        endif
-
-        if !has_key(a:options, 'err_cb')
-          function! s:callback2on_stderr(ch, data, event) dict
-            let self.stderr_buf = s:neocb(a:ch, self.stderr_buf, a:data, self.callback)
-          endfunction
-          let l:options['on_stderr'] = function('s:callback2on_stderr', [], l:options)
-=======
           let l:options['on_stdout'] = function('s:callback2on_stdout', [l:out_mode], l:options)
         endif
 
         if !has_key(a:options, 'err_cb')
           let l:options['on_stderr'] = function('s:callback2on_stderr', [l:err_mode], l:options)
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
         endif
 
         continue
@@ -392,28 +378,14 @@ function! s:neooptions(options)
 
       if key == 'out_cb'
         let l:options['out_cb'] = a:options['out_cb']
-<<<<<<< HEAD
-        function! s:on_stdout(ch, data, event) dict
-          let self.stdout_buf = s:neocb(a:ch, self.stdout_buf, a:data, self.out_cb)
-        endfunction
-        let l:options['on_stdout'] = function('s:on_stdout', [], l:options)
-=======
         let l:options['on_stdout'] = function('s:on_stdout', [l:out_mode], l:options)
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
         continue
       endif
 
       if key == 'err_cb'
         let l:options['err_cb'] = a:options['err_cb']
-<<<<<<< HEAD
-        function! s:on_stderr(ch, data, event) dict
-          let self.stderr_buf = s:neocb(a:ch, self.stderr_buf, a:data, self.err_cb )
-        endfunction
-        let l:options['on_stderr'] = function('s:on_stderr', [], l:options)
-=======
         let l:options['on_stderr'] = function('s:on_stderr', [l:err_mode], l:options)
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
         continue
       endif
@@ -488,17 +460,6 @@ function! s:winjobarg(idx, val) abort
   return a:val
 endfunction
 
-<<<<<<< HEAD
-function! s:neocb(ch, buf, data, callback)
-  " dealing with the channel lines of Neovim is awful. The docs (:help
-  " channel-lines) say:
-  " stream event handlers may receive partial (incomplete) lines. For a
-  " given invocation of on_stdout etc, `a:data` is not guaranteed to end
-  " with a newline.
-  "   - `abcdefg` may arrive as `['abc']`, `['defg']`.
-  "   - `abc\nefg` may arrive as `['abc', '']`, `['efg']` or `['abc']`,
-  "     `['','efg']`, or even `['ab']`, `['c','efg']`.
-=======
 function! s:neocb(mode, ch, buf, data, callback)
   " dealing with the channel lines of Neovim is awful. The docs (:help
   " channel-lines) say:
@@ -527,7 +488,6 @@ function! s:neocb(mode, ch, buf, data, callback)
   "     represent newlines.
 
   let l:buf = ''
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
   " a single empty string means EOF was reached.
   if len(a:data) == 1 && a:data[0] == ''
@@ -538,25 +498,11 @@ function! s:neocb(mode, ch, buf, data, callback)
     endif
 
     let l:data = [a:buf]
-<<<<<<< HEAD
-    let l:buf = ''
-=======
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
   else
     let l:data = copy(a:data)
     let l:data[0] = a:buf . l:data[0]
 
     " The last element may be a partial line; save it for next time.
-<<<<<<< HEAD
-    let l:buf = l:data[-1]
-
-    let l:data = l:data[:-2]
-  endif
-
-  for l:msg in l:data
-    call a:callback(a:ch, l:msg)
-  endfor
-=======
     if a:mode != 'raw'
       let l:buf = l:data[-1]
       let l:data = l:data[:-2]
@@ -574,7 +520,6 @@ function! s:neocb(mode, ch, buf, data, callback)
 
     let l:i += 1
   endwhile
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
   return l:buf
 endfunction

@@ -153,8 +153,6 @@ g:ale_python_black_auto_pipenv                  *g:ale_python_black_auto_pipenv*
   Detect whether the file is inside a pipenv, and set the executable to `pipenv`
   if true. This is overridden by a manually-set executable.
 
-<<<<<<< HEAD
-=======
 g:ale_python_black_change_directory       *g:ale_python_black_change_directory*
                                           *b:ale_python_black_change_directory*
   Type: |Number|
@@ -165,7 +163,6 @@ g:ale_python_black_change_directory       *g:ale_python_black_change_directory*
   configuration files more easily. This option can be turned off if you want
   to control the directory Python is executed from yourself.
 
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
 ===============================================================================
 flake8                                                      *ale-python-flake8*

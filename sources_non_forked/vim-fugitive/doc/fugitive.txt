@@ -30,52 +30,8 @@ that are part of Git repositories).
 :Glcd [directory]       |:lcd| relative to the repository.
 
                                         *fugitive-:Gstatus* *fugitive-:G*
-<<<<<<< HEAD
-:Gstatus                Bring up a git-status inspired summary in the preview
-:G                      window.  The following maps, which work on the cursor
-                        line file where sensible, are provided:
-
-                        g?    show this help
-                        <C-N> next file
-                        <C-P> previous file
-                        <CR>  |:Gedit|
-                        -     |:Git| add
-                        -     |:Git| reset (staged files)
-                        ca    |:Gcommit| --amend
-                        cc    |:Gcommit|
-                        ce    |:Gcommit| --amend --no-edit
-                        cw    |:Gcommit| --amend --only
-                        cva   |:Gcommit| --verbose --amend
-                        cvc   |:Gcommit| --verbose
-                        cf    |:Gcommit| --fixup=
-                        cs    |:Gcommit| --squash=
-                        cA    |:Gcommit| --edit --squash=
-                        =     toggle inline diff
-                        <     show inline diff
-                        >     hide inline diff
-                        D     |:Gdiff|
-                        ds    |:Gsdiff|
-                        dp    |:Git!| diff (p for patch; use :Gw to apply)
-                        dp    |:Git| add --intent-to-add (untracked files)
-                        dv    |:Gvdiff|
-                        gO    |:Gvsplit|
-                        O     |:Gtabedit|
-                        o     |:Gsplit|
-                        P     |:Git| add --patch
-                        P     |:Git| reset --patch (staged files)
-                        s     |:Git| add
-                        u     |:Git| reset
-                        X     |:Git| checkout
-                        X     |:Git| checkout HEAD (staged files)
-                        X     |:Git| clean (untracked files)
-                        X     |:Git| rm (unmerged files)
-                        q     close status
-                        r     reload status
-                        .     enter |:| command line with file prepopulated
-=======
 :G                      Bring up a summary window vaguely akin to git-status.
 :Gstatus                Press g? or see |fugitive-mappings| for usage.
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
                                                 *fugitive-:Gcommit*
 :Gcommit [args]         A wrapper around git-commit.  Unless the arguments
@@ -373,13 +329,7 @@ C                       Open the commit containing the current file.
                                                 *fugitive_c*
 Commit mappings ~
 
-<<<<<<< HEAD
-                                                *fugitive-gO*
-gO                      Jump to the |fugitive-object| under the cursor in a
-                        new vertical split.
-=======
 cc                      Create a commit.
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
 ca                      Amend the last commit and edit the message.
 

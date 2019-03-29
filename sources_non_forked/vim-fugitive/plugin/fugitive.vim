@@ -256,19 +256,11 @@ augroup fugitive
         \   call fugitive#MapCfile() |
         \ endif
   autocmd FileType gitcommit
-<<<<<<< HEAD
-        \ if exists('b:git_dir') |
-        \   call fugitive#MapCfile('fugitive#MessageCfile()') |
-        \ endif
-  autocmd FileType fugitive
-        \ if exists('b:git_dir') |
-=======
         \ if len(FugitiveGitDir()) |
         \   call fugitive#MapCfile('fugitive#MessageCfile()') |
         \ endif
   autocmd FileType fugitive
         \ if len(FugitiveGitDir()) |
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
         \   call fugitive#MapCfile('fugitive#StatusCfile()') |
         \ endif
   autocmd FileType gitrebase

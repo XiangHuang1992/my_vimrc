@@ -29,12 +29,6 @@ IMPROVEMENTS:
 * Do not require `'autowrite'` or `'autowriteall'` to be set when using
   autocompletion in module mode.
   [[GH-2091]](https://github.com/fatih/vim-go/pull/2091)
-<<<<<<< HEAD
-* Fix use of g:go_metalinter_command _and_ apply it even when autosaving.
-  [[GH-2101]](https://github.com/fatih/vim-go/pull/2101)
-* Report errors in quickfix when Delve fails to start (e.g. compiler errors).
-  [[GH-2111]](https://github.com/fatih/vim-go/pull/2111)
-=======
 * Fix use of `g:go_metalinter_command` _and_ apply it even when autosaving.
   [[GH-2101]](https://github.com/fatih/vim-go/pull/2101)
 * Report errors in quickfix when Delve fails to start (e.g. compiler errors).
@@ -66,7 +60,8 @@ IMPROVEMENTS:
   [[GH-2172]](https://github.com/fatih/vim-go/pull/2172)
 * Add support for golangci-lint.
   [[GH-2182]](https://github.com/fatih/vim-go/pull/2182)
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
+* Show hover balloon using gopls instead of gocode.
+  [[GH-2202]](https://github.com/fatih/vim-go/pull/2202)
 
 BUG FIXES:
 * Fix opening of non-existent file from `:GoDeclsDir` when the current
@@ -85,8 +80,6 @@ BUG FIXES:
   [[GH-2097]](https://github.com/fatih/vim-go/pull/2097)
 * Do not clear buffer-local autocmds of other buffers. 
   [[GH-2109]](https://github.com/fatih/vim-go/pull/2109)
-<<<<<<< HEAD
-=======
 * Highlight return parameter types when g:go_highlight_function_arguments is
   set.  [[GH-2116]](https://github.com/fatih/vim-go/pull/2116)
 * Fix lockup in Neovim when trying to run `:GoDebugTest` when there are no
@@ -102,7 +95,6 @@ BUG FIXES:
   [[GH-2189]](https://github.com/fatih/vim-go/pull/2189)
 * Highlight pre-release and metadata in versions in go.mod.
   [[GH-2192]](https://github.com/fatih/vim-go/pull/2192)
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
 ## 1.19 - (November 4, 2018)
 

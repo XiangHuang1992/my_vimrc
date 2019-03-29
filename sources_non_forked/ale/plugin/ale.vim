@@ -197,15 +197,12 @@ command! -bar ALEGoToDefinition :call ale#definition#GoTo({})
 command! -bar ALEGoToDefinitionInTab :call ale#definition#GoTo({'open_in': 'tab'})
 command! -bar ALEGoToDefinitionInSplit :call ale#definition#GoTo({'open_in': 'horizontal-split'})
 command! -bar ALEGoToDefinitionInVSplit :call ale#definition#GoTo({'open_in': 'vertical-split'})
-<<<<<<< HEAD
-=======
 
 " Go to type definition for tsserver and LSP
 command! -bar ALEGoToTypeDefinition :call ale#definition#GoToType({})
 command! -bar ALEGoToTypeDefinitionInTab :call ale#definition#GoToType({'open_in': 'tab'})
 command! -bar ALEGoToTypeDefinitionInSplit :call ale#definition#GoToType({'open_in': 'horizontal-split'})
 command! -bar ALEGoToTypeDefinitionInVSplit :call ale#definition#GoToType({'open_in': 'vertical-split'})
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
 " Find references for tsserver and LSP
 command! -bar -nargs=* ALEFindReferences :call ale#references#Find(<f-args>)
@@ -251,13 +248,10 @@ nnoremap <silent> <Plug>(ale_go_to_definition) :ALEGoToDefinition<Return>
 nnoremap <silent> <Plug>(ale_go_to_definition_in_tab) :ALEGoToDefinitionInTab<Return>
 nnoremap <silent> <Plug>(ale_go_to_definition_in_split) :ALEGoToDefinitionInSplit<Return>
 nnoremap <silent> <Plug>(ale_go_to_definition_in_vsplit) :ALEGoToDefinitionInVSplit<Return>
-<<<<<<< HEAD
-=======
 nnoremap <silent> <Plug>(ale_go_to_type_definition) :ALEGoToTypeDefinition<Return>
 nnoremap <silent> <Plug>(ale_go_to_type_definition_in_tab) :ALEGoToTypeDefinitionInTab<Return>
 nnoremap <silent> <Plug>(ale_go_to_type_definition_in_split) :ALEGoToTypeDefinitionInSplit<Return>
 nnoremap <silent> <Plug>(ale_go_to_type_definition_in_vsplit) :ALEGoToTypeDefinitionInVSplit<Return>
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 nnoremap <silent> <Plug>(ale_find_references) :ALEFindReferences<Return>
 nnoremap <silent> <Plug>(ale_hover) :ALEHover<Return>
 nnoremap <silent> <Plug>(ale_documentation) :ALEDocumentation<Return>

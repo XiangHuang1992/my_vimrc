@@ -9,23 +9,6 @@ function! go#lint#Gometa(bang, autosave, ...) abort
     let goargs = a:000
   endif
 
-<<<<<<< HEAD
-  if empty(go#config#MetalinterCommand())
-    let bin_path = go#path#CheckBinPath("gometalinter")
-    if empty(bin_path)
-      return
-    endif
-
-    let cmd = [bin_path]
-    let cmd += ["--disable-all"]
-
-    " gometalinter has a --tests flag to tell its linters whether to run
-    " against tests. While not all of its linters respect this flag, for those
-    " that do, it means if we don't pass --tests, the linter won't run against
-    " test files. One example of a linter that will not run against tests if
-    " we do not specify this flag is errcheck.
-    let cmd += ["--tests"]
-=======
   let l:metalinter = go#config#MetalinterCommand()
 
   if l:metalinter == 'gometalinter' || l:metalinter == 'golangci-lint'
@@ -33,7 +16,6 @@ function! go#lint#Gometa(bang, autosave, ...) abort
     if empty(cmd)
       return
     endif
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
     " linters
     let linters = a:autosave ? go#config#MetalinterAutosaveEnabled() : go#config#MetalinterEnabled()
@@ -104,15 +86,6 @@ function! go#lint#Gometa(bang, autosave, ...) abort
     call go#list#Clean(l:listtype)
     echon "vim-go: " | echohl Function | echon "[metalinter] PASS" | echohl None
   else
-<<<<<<< HEAD
-    " GoMetaLinter can output one of the two, so we look for both:
-    "   <file>:<line>:<column>:<severity>: <message> (<linter>)
-    "   <file>:<line>::<severity>: <message> (<linter>)
-    " This can be defined by the following errorformat:
-    let errformat = "%f:%l:%c:%t%*[^:]:\ %m,%f:%l::%t%*[^:]:\ %m"
-
-=======
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
     " Parse and populate our location list
     call go#list#ParseFormat(l:listtype, errformat, split(out, "\n"), 'GoMetaLinter')
 

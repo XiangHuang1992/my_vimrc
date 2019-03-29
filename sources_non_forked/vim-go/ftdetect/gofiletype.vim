@@ -5,21 +5,9 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " Note: should not use augroup in ftdetect (see :help ftdetect)
-<<<<<<< HEAD
-au BufNewFile *.go setfiletype go | if &modifiable | setlocal fileencoding=utf-8 fileformat=unix | endif
-au BufRead *.go call s:gofiletype_pre("go")
-au BufReadPost *.go call s:gofiletype_post()
-
-au BufNewFile *.s setfiletype asm | if &modifiable | setlocal fileencoding=utf-8 fileformat=unix | endif
-au BufRead *.s call s:gofiletype_pre("asm")
-au BufReadPost *.s call s:gofiletype_post()
-
-au BufRead,BufNewFile *.tmpl set filetype=gohtmltmpl
-=======
 au BufRead,BufNewFile *.go setfiletype go
 au BufRead,BufNewFile *.s setfiletype asm
 au BufRead,BufNewFile *.tmpl setfiletype gohtmltmpl
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
 " remove the autocommands for modsim3, and lprolog files so that their
 " highlight groups, syntax, etc. will not be loaded. *.MOD is included, so

@@ -228,18 +228,10 @@ function! s:gofiletype_pre()
   set fileencodings=utf-8 fileformats=unix
 endfunction
 
-<<<<<<< HEAD
-function! s:template_autocreate()
-  " create new template from scratch
-  if get(g:, "go_template_autocreate", 1) && &modifiable
-    call go#template#create()
-  endif
-=======
 " restore fileencodings as others
 function! s:gofiletype_post()
   let &g:fileformats = s:current_fileformats
   let &g:fileencodings = s:current_fileencodings
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 endfunction
 
 augroup vim-go

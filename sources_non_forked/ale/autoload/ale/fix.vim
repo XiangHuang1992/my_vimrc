@@ -222,28 +222,9 @@ function! s:RunFixer(options) abort
 
     let l:ChainCallback = get(a:options, 'chain_callback', v:null)
 
-<<<<<<< HEAD
-    while len(a:options.callback_list) > l:index
-        let l:Function = l:ChainCallback isnot v:null
-        \   ? ale#util#GetFunction(l:ChainCallback)
-        \   : a:options.callback_list[l:index]
-
-        if l:ChainCallback isnot v:null
-            " Chained commands accept (buffer, output, [input])
-            let l:result = ale#util#FunctionArgCount(l:Function) == 2
-            \   ? call(l:Function, [l:buffer, a:options.output])
-            \   : call(l:Function, [l:buffer, a:options.output, copy(l:input)])
-        else
-            " Chained commands accept (buffer, [done, input])
-            let l:result = ale#util#FunctionArgCount(l:Function) == 1
-            \   ? call(l:Function, [l:buffer])
-            \   : call(l:Function, [l:buffer, v:null, copy(l:input)])
-        endif
-=======
     let l:Function = l:ChainCallback isnot v:null
     \   ? ale#util#GetFunction(l:ChainCallback)
     \   : a:options.callback_list[l:index]
->>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 
     " Record new jobs started as fixer jobs.
     call setbufvar(l:buffer, 'ale_job_type', 'fixer')
