@@ -15,6 +15,10 @@ IMPROVEMENTS:
 * Do not require `'autowrite'` or `'autowriteall'` to be set when using
   autocompletion in module mode.
   [[GH-2091]](https://github.com/fatih/vim-go/pull/2091)
+* Fix use of g:go_metalinter_command _and_ apply it even when autosaving.
+  [[GH-2101]](https://github.com/fatih/vim-go/pull/2101)
+* Report errors in quickfix when Delve fails to start (e.g. compiler errors).
+  [[GH-2111]](https://github.com/fatih/vim-go/pull/2111)
 
 BUG FIXES:
 * Fix opening of non-existent file from `:GoDeclsDir` when the current
@@ -28,6 +32,11 @@ BUG FIXES:
   [[GH-2075]](https://github.com/fatih/vim-go/pull/2075)
 * Fix `:GoSameIdsToggle`.
   [[GH-2086]](https://github.com/fatih/vim-go/pull/2086)
+* Do not set fileencoding or fileformat options or populate from template when
+  the buffer is not modifiable.
+  [[GH-2097]](https://github.com/fatih/vim-go/pull/2097)
+* Do not clear buffer-local autocmds of other buffers. 
+  [[GH-2109]](https://github.com/fatih/vim-go/pull/2109)
 
 ## 1.19 - (November 4, 2018)
 
