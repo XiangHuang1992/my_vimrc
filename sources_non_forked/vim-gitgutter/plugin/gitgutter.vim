@@ -97,6 +97,10 @@ command! -bar GitGutterDisable call gitgutter#disable()
 command! -bar GitGutterEnable  call gitgutter#enable()
 command! -bar GitGutterToggle  call gitgutter#toggle()
 
+command! -bar GitGutterBufferDisable call gitgutter#buffer_disable()
+command! -bar GitGutterBufferEnable  call gitgutter#buffer_enable()
+command! -bar GitGutterBufferToggle  call gitgutter#buffer_toggle()
+
 " }}}
 
 " Line highlights {{{
@@ -162,6 +166,12 @@ endfunction
 
 " }}}
 
+" Folds {{{
+
+command! -bar GitGutterFold call gitgutter#fold#toggle()
+
+" }}}
+
 command! -bar GitGutterDebug call gitgutter#debug#debug()
 
 " Maps {{{
@@ -202,7 +212,15 @@ augroup gitgutter
   "   vim -o file1 file2
   autocmd VimEnter * if winnr() != winnr('$') | call gitgutter#all(0) | endif
 
-  autocmd FocusGained,ShellCmdPost * call gitgutter#all(1)
+  autocmd ShellCmdPost * call gitgutter#all(1)
+  autocmd BufLeave term://* call gitgutter#all(1)
+
+  " Handle all buffers when focus is gained, but only after it was lost.
+  " FocusGained gets triggered on startup with Neovim at least already.
+  " Therefore this tracks also if it was lost before.
+  let s:focus_was_lost = 0
+  autocmd FocusGained * if s:focus_was_lost | let focus_was_lost = 0 | call gitgutter#all(1) | endif
+  autocmd FocusLost * let s:focus_was_lost = 1
 
   if exists('##VimResume')
     autocmd VimResume * call gitgutter#all(1)

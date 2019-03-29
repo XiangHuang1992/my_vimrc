@@ -768,18 +768,20 @@ endfunction
 
 
 function! s:MarkdownRefreshSyntax(force)
-    if &filetype == 'markdown' && line('$') > 1
+    if &filetype =~ 'markdown' && line('$') > 1
         call s:MarkdownHighlightSources(a:force)
     endif
 endfunction
 
 function! s:MarkdownClearSyntaxVariables()
-    if &filetype == 'markdown'
+    if &filetype =~ 'markdown'
         unlet! b:mkd_included_filetypes
     endif
 endfunction
 
 augroup Mkd
+    " These autocmd calling s:MarkdownRefreshSyntax need to be kept in sync with
+    " the autocmds calling s:MarkdownSetupFolding in after/ftplugin/markdown.vim.
     autocmd! * <buffer>
     autocmd BufWinEnter <buffer> call s:MarkdownRefreshSyntax(1)
     autocmd BufUnload <buffer> call s:MarkdownClearSyntaxVariables()

@@ -18,6 +18,7 @@ function! nerdtree#ui_glue#createDefaultBindings()
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapActivateNode, 'scope': "DirNode", 'callback': s."activateDirNode" })
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapActivateNode, 'scope': "FileNode", 'callback': s."activateFileNode" })
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapActivateNode, 'scope': "Bookmark", 'callback': s."activateBookmark" })
+    call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapPreview, 'scope': "Bookmark", 'callback': s."previewBookmark" })
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapActivateNode, 'scope': "all", 'callback': s."activateAll" })
 
     call NERDTreeAddKeyMap({ 'key': g:NERDTreeMapOpenSplit, 'scope': "Node", 'callback': s."openHSplit" })
@@ -100,7 +101,7 @@ function! s:activateFileNode(node)
     call a:node.activate({'reuse': 'all', 'where': 'p'})
 endfunction
 
-"FUNCTION: s:activateBookmark() {{{1
+"FUNCTION: s:activateBookmark(bookmark) {{{1
 "handle the user activating a bookmark
 function! s:activateBookmark(bm)
     call a:bm.activate(b:NERDTree, !a:bm.path.isDirectory ? {'where': 'p'} : {})
@@ -491,8 +492,16 @@ function! s:openNodeRecursively(node)
     call nerdtree#echo("Recursively opening node. Please wait...")
     call a:node.openRecursively()
     call b:NERDTree.render()
-    redraw
-    call nerdtree#echo("Recursively opening node. Please wait... DONE")
+    redraw!
+endfunction
+
+" FUNCTION: s:previewBookmark(bookmark) {{{1
+function! s:previewBookmark(bookmark)
+    if a:bookmark.path.isDirectory
+        execute 'NERDTreeFind '.a:bookmark.path.str()
+    else
+        call a:bookmark.activate(b:NERDTree, {'stay': 1, 'where': 'p', 'keepopen': 1})
+    endif
 endfunction
 
 "FUNCTION: s:previewNodeCurrent(node) {{{1
@@ -534,9 +543,8 @@ function! s:refreshRoot()
     call nerdtree#exec(g:NERDTree.GetWinNum() . "wincmd w")
     call b:NERDTree.root.refresh()
     call b:NERDTree.render()
-    redraw
+    redraw!
     call nerdtree#exec(l:curWin . "wincmd w")
-    call nerdtree#echo("Refreshing the root node. This could take a while... DONE")
 endfunction
 
 " FUNCTION: s:refreshCurrent(node) {{{1
@@ -550,8 +558,7 @@ function! s:refreshCurrent(node)
     call nerdtree#echo("Refreshing node. This could take a while...")
     call node.refresh()
     call b:NERDTree.render()
-    redraw
-    call nerdtree#echo("Refreshing node. This could take a while... DONE")
+    redraw!
 endfunction
 
 " FUNCTION: nerdtree#ui_glue#setupCommands() {{{1

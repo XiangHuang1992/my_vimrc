@@ -1,4 +1,8 @@
 .local/
+<<<<<<< HEAD
+=======
+.config/
+>>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 .cache/
 .dlv/
 .git/

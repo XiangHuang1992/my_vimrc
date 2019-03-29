@@ -210,6 +210,12 @@ function! go#config#DebugCommands() abort
   return g:go_debug_commands
 endfunction
 
+function! go#config#LspLog() abort
+  " make sure g:go_lsp_log is set so that it can be added to easily.
+  let g:go_lsp_log = get(g:, 'go_lsp_log', [])
+  return g:go_lsp_log
+endfunction
+
 function! go#config#SetDebugDiag(value) abort
   let g:go_debug_diag = a:value
 endfunction
@@ -235,15 +241,27 @@ function! go#config#SetTemplateAutocreate(value) abort
 endfunction
 
 function! go#config#MetalinterCommand() abort
-  return get(g:, "go_metalinter_command", "")
+  return get(g:, "go_metalinter_command", "gometalinter")
 endfunction
 
 function! go#config#MetalinterAutosaveEnabled() abort
-  return get(g:, 'go_metalinter_autosave_enabled', ['vet', 'golint'])
+  let l:default_enabled = ["vet", "golint"]
+
+  if go#config#MetalinterCommand() == "golangci-lint"
+    let l:default_enabled = ["govet", "golint"]
+  endif
+
+  return get(g:, "go_metalinter_autosave_enabled", default_enabled)
 endfunction
 
 function! go#config#MetalinterEnabled() abort
-  return get(g:, "go_metalinter_enabled", ['vet', 'golint', 'errcheck'])
+  let l:default_enabled = ["vet", "golint", "errcheck"]
+
+  if go#config#MetalinterCommand() == "golangci-lint"
+    let l:default_enabled = ["govet", "golint"]
+  endif
+
+  return get(g:, "go_metalinter_enabled", default_enabled)
 endfunction
 
 function! go#config#MetalinterDisabled() abort
@@ -388,8 +406,9 @@ function! go#config#HighlightFunctions() abort
   return get(g:, 'go_highlight_functions', 0)
 endfunction
 
-function! go#config#HighlightFunctionArguments() abort
-  return get(g:, 'go_highlight_function_arguments', 0)
+function! go#config#HighlightFunctionParameters() abort
+  " fallback to highlight_function_arguments for backwards compatibility
+  return get(g:, 'go_highlight_function_parameters', get(g:, 'go_highlight_function_arguments', 0))
 endfunction
 
 function! go#config#HighlightFunctionCalls() abort
@@ -437,6 +456,10 @@ function! go#config#FoldEnable(...) abort
     return index(go#config#FoldEnable(), a:1) > -1
   endif
   return get(g:, 'go_fold_enable', ['block', 'import', 'varconst', 'package_comment'])
+endfunction
+
+function! go#config#EchoGoInfo() abort
+  return get(g:, "go_echo_go_info", 1)
 endfunction
 
 " Set the default value. A value of "1" is a shortcut for this, for

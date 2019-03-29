@@ -40,7 +40,7 @@ function! go#tool#Files(...) abort
     endif
   endfor
 
-  let [l:out, l:err] = go#tool#ExecuteInDir(['go', 'list', '-tags', go#config#BuildTags(), '-f', l:combined])
+  let [l:out, l:err] = go#util#ExecInDir(['go', 'list', '-tags', go#config#BuildTags(), '-f', l:combined])
   return split(l:out, '\n')
 endfunction
 
@@ -50,7 +50,7 @@ function! go#tool#Deps() abort
   else
     let format = "{{range $f := .Deps}}{{$f}}\n{{end}}"
   endif
-  let [l:out, l:err] = go#tool#ExecuteInDir(['go', 'list', '-tags', go#config#BuildTags(), '-f', l:format])
+  let [l:out, l:err] = go#util#ExecInDir(['go', 'list', '-tags', go#config#BuildTags(), '-f', l:format])
   return split(l:out, '\n')
 endfunction
 
@@ -61,14 +61,14 @@ function! go#tool#Imports() abort
   else
     let format = "{{range $f := .Imports}}{{$f}}{{printf \"\\n\"}}{{end}}"
   endif
-  let [l:out, l:err] = go#tool#ExecuteInDir(['go', 'list', '-tags', go#config#BuildTags(), '-f', l:format])
+  let [l:out, l:err] = go#util#ExecInDir(['go', 'list', '-tags', go#config#BuildTags(), '-f', l:format])
   if l:err != 0
     echo out
     return imports
   endif
 
   for package_path in split(out, '\n')
-    let [l:out, l:err] = go#tool#ExecuteInDir(['go', 'list', '-tags', go#config#BuildTags(), '-f', '{{.Name}}', l:package_path])
+    let [l:out, l:err] = go#util#ExecInDir(['go', 'list', '-tags', go#config#BuildTags(), '-f', '{{.Name}}', l:package_path])
     if l:err != 0
       echo out
       return imports
@@ -92,7 +92,7 @@ function! go#tool#Info(showstatus) abort
 endfunction
 
 function! go#tool#PackageName() abort
-  let [l:out, l:err] = go#tool#ExecuteInDir(['go', 'list', '-tags', go#config#BuildTags(), '-f', '{{.Name}}'])
+  let [l:out, l:err] = go#util#ExecInDir(['go', 'list', '-tags', go#config#BuildTags(), '-f', '{{.Name}}'])
   if l:err != 0
       return -1
   endif
@@ -100,6 +100,7 @@ function! go#tool#PackageName() abort
   return split(out, '\n')[0]
 endfunction
 
+<<<<<<< HEAD
 function! go#tool#ParseErrors(lines) abort
   let errors = []
 
@@ -182,10 +183,12 @@ function! go#tool#ExecuteInDir(cmd) abort
   return [l:out, l:err]
 endfunction
 
+=======
+>>>>>>> 5a2572df03b71138a6a703a8c85af864b2ae87cf
 " Exists checks whether the given importpath exists or not. It returns 0 if
 " the importpath exists under GOPATH.
 function! go#tool#Exists(importpath) abort
-    let [l:out, l:err] = go#tool#ExecuteInDir(['go', 'list', a:importpath])
+    let [l:out, l:err] = go#util#ExecInDir(['go', 'list', a:importpath])
     if l:err != 0
         return -1
     endif
@@ -193,28 +196,8 @@ function! go#tool#Exists(importpath) abort
     return 0
 endfunction
 
-function! go#tool#OpenBrowser(url) abort
-    let l:cmd = go#config#PlayBrowserCommand()
-    if len(l:cmd) == 0
-        redraw
-        echohl WarningMsg
-        echo "It seems that you don't have general web browser. Open URL below."
-        echohl None
-        echo a:url
-        return
-    endif
-
-    " if setting starts with a !.
-    if l:cmd =~ '^!'
-        let l:cmd = substitute(l:cmd, '%URL%', '\=escape(shellescape(a:url), "#")', 'g')
-        silent! exec l:cmd
-    elseif cmd =~ '^:[A-Z]'
-        let l:cmd = substitute(l:cmd, '%URL%', '\=escape(a:url,"#")', 'g')
-        exec l:cmd
-    else
-        let l:cmd = substitute(l:cmd, '%URL%', '\=shellescape(a:url)', 'g')
-        call go#util#System(l:cmd)
-    endif
+function! go#tool#DescribeBalloon()
+  return go#guru#DescribeBalloon()
 endfunction
 
 " restore Vi compatibility settings
